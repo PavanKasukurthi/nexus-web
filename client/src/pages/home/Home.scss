@@ -1,0 +1,15 @@
+@import '../../style.scss';
+
+.home {
+  @include themify($themes) {
+    height: calc(100vh - 55px);
+    padding: 1rem;
+    background-color: themed('bgSoft');
+
+    overflow-y: scroll;
+
+    &::-webkit-scrollbar {
+      display: none;
+    }
+  }
+}

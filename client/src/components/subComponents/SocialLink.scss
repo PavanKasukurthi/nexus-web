@@ -1,0 +1,24 @@
+@import '../../style.scss';
+
+.subItem {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 0.2rem;
+
+  img {
+    width: 30px;
+    height: 30px;
+    object-fit: cover;
+  }
+}
+
+.subItem:hover {
+  @include themify($themes) {
+    cursor: pointer;
+    background-color: themed('hover');
+    // background-color: lightgray;
+    border-radius: 0.5rem;
+    padding: 0.2rem;
+  }
+}
