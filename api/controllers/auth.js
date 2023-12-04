@@ -42,6 +42,8 @@ export const login = (req, res) => {
 
     if (data.length === 0) return res.status(404).json('User not found!')
 
+    // console.log(data)
+
     const checkPassword = bcrypt.compareSync(
       req.body.password,
       data[0].password
@@ -49,17 +51,26 @@ export const login = (req, res) => {
 
     if (!checkPassword)
       return res.status(400).json('Wrong username or password')
+
+    const token = jwt.sign({ id: data[0].id }, 'secretkey')
+
+    const { password, ...others } = data[0]
+    //others - all other properties except password
+
+    res
+      .cookie('accessToken', token, {
+        httpOnly: true,
+      })
+      .status(200)
+      .json(others)
   })
-
-  const token = jwt.sign({ id: data[0].id }, 'secretkey')
-
-  const { password, ...others } = data[0]
-
+}
+export const logout = (req, res) => {
   res
-    .cookie('accessToken', token, {
-      httpOnly: true,
+    .clearCookie('accessToken', {
+      secure: true,
+      sameSite: 'none',
     })
     .status(200)
-    .json(others)
+    .json('User has been logged out')
 }
-export const logout = (req, res) => {}
